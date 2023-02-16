@@ -1,0 +1,47 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>🍪🍪</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">    </head>
+<body>
+<div class="card">
+    <h1 class="text-center mb-3 justify-content-center">🍪🍪</h1>
+    <div class="card-body">
+        <div class="container mt-5">
+            <h1 class="text-center mb-3">{{.Description}}</h1>
+            {{range $i, $option := .Options}}
+                <button type="button" class="btn btn-outline-secondary btn-lg col-12" onclick="sendSurveyResponse({{$i}})">{{$option.Name}}</button><br><br>
+            {{end}}
+        </div>
+    </div>
+</div>
+<script>
+    function sendSurveyResponse(Id) {
+        fetch('https://survey.erg.digital/submit', {
+            method: 'POST',
+            body: JSON.stringify({
+                Id: Id,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                mode: 'no-cors'
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.error) {
+                    console.log(data.message);
+                } else {
+                    console.log(data.message);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+</script>
+</body>
+</html>

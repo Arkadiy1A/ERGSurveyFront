@@ -1,0 +1,76 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Новый вопрос</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">    </head>
+</head>
+
+<body>
+<div class="card">
+    <div class="card-body">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Вопрос</span>
+            </div>
+            <input id="erg_question_name" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Ответ 1</span>
+            </div>
+            <input id="erg_ans_1" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Ответ 2</span>
+            </div>
+            <input id="erg_ans_2" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Ответ 3</span>
+            </div>
+            <input id="erg_ans_3" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">PIN</span>
+            </div>
+            <input id="erg_pin" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+        <button type="button" class="btn btn-success" onclick="createNewQuestion()"> Новый вопрос </button>
+    </div>
+</div>
+<script>
+    function createNewQuestion() {
+        fetch('https://survey.erg.digital/newQuestion', {
+            method: 'POST',
+            body: JSON.stringify({
+                Name: document.getElementById('erg_question_name').value,
+                Q1: document.getElementById('erg_ans_1').value,
+                Q2: document.getElementById('erg_ans_2').value,
+                Q3: document.getElementById('erg_ans_3').value,
+                Pin: document.getElementById('erg_pin').value,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                mode: 'no-cors'
+            },
+        })
+            .then((data) => {
+                if (data.error) {
+                    console.log(data.message);
+                } else {
+                    console.log(data.message);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+</script>
+</body>
+</html>
