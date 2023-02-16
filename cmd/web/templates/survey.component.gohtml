@@ -20,7 +20,7 @@
 </div>
 <script>
     function sendSurveyResponse(Id) {
-        fetch({{.Url}}+"/submit", {
+        fetch({{.Url}} + "/submit", {
             method: 'POST',
             body: JSON.stringify({
                 Id: Id,

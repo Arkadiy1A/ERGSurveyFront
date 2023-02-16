@@ -9,7 +9,8 @@ import (
 	"strconv"
 )
 
-type QuestionModel struct {
+type SurveyModel struct {
+	Survey   Survey
 	Question Question
 	Url      string
 }
@@ -21,16 +22,16 @@ func main() {
 	url := os.Getenv("BASE_URL")
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		renderQuestion(w, "templates/survey.component.gohtml", QuestionModel{*surv.CurrentQuestion(), url})
+		render(w, "templates/survey.component.gohtml", SurveyModel{Question: *surv.CurrentQuestion(), Url: url})
 	})
 
 	http.HandleFunc("/table", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("Questions = %v\n", surv)
-		renderAnswers(w, "templates/table.component.gohtml", surv)
+		render(w, "templates/table.component.gohtml", SurveyModel{Survey: surv})
 	})
 
 	http.HandleFunc("/question", func(w http.ResponseWriter, r *http.Request) {
-		renderNewQuestion(w, "templates/question.component.gohtml")
+		render(w, "templates/question.component.gohtml", SurveyModel{Url: url})
 	})
 
 	http.HandleFunc("/submit", func(w http.ResponseWriter, r *http.Request) {

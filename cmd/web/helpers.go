@@ -12,40 +12,14 @@ import (
 //go:embed templates
 var templateFS embed.FS
 
-func renderNewQuestion(w http.ResponseWriter, t string) {
+func render(w http.ResponseWriter, t string, data SurveyModel) {
 	tmpl, err := template.ParseFS(templateFS, t)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	err = tmpl.Execute(w, nil)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-}
-
-func renderQuestion(w http.ResponseWriter, t string, question QuestionModel) {
-	tmpl, err := template.ParseFS(templateFS, t)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	err = tmpl.Execute(w, question)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-}
-
-func renderAnswers(w http.ResponseWriter, t string, surv Survey) {
-	tmpl, err := template.ParseFS(templateFS, t)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	err = tmpl.Execute(w, surv)
+	err = tmpl.Execute(w, data)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
