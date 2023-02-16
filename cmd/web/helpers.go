@@ -25,14 +25,14 @@ func renderNewQuestion(w http.ResponseWriter, t string) {
 	}
 }
 
-func renderQuestion(w http.ResponseWriter, t string, question *Question) {
+func renderQuestion(w http.ResponseWriter, t string, question QuestionModel) {
 	tmpl, err := template.ParseFS(templateFS, t)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	err = tmpl.Execute(w, *question)
+	err = tmpl.Execute(w, question)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}

@@ -11,8 +11,8 @@
     <h1 class="text-center mb-3 justify-content-center">🍪🍪</h1>
     <div class="card-body">
         <div class="container mt-5">
-            <h1 class="text-center mb-3">{{.Description}}</h1>
-            {{range $i, $option := .Options}}
+            <h1 class="text-center mb-3">{{.Question.Description}}</h1>
+            {{range $i, $option := .Question.Options}}
                 <button type="button" class="btn btn-outline-secondary btn-lg col-12" onclick="sendSurveyResponse({{$i}})">{{$option.Name}}</button><br><br>
             {{end}}
         </div>
@@ -20,7 +20,7 @@
 </div>
 <script>
     function sendSurveyResponse(Id) {
-        fetch('https://survey.erg.digital/submit', {
+        fetch({{.Url}}'/submit', {
             method: 'POST',
             body: JSON.stringify({
                 Id: Id,

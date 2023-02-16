@@ -5,16 +5,23 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 )
+
+type QuestionModel struct {
+	Question Question
+	Url      string
+}
 
 func main() {
 	port := "8080"
 
 	surv := CreateDummySurvey()
+	url := os.Getenv("BASE_URL")
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		renderQuestion(w, "templates/survey.component.gohtml", surv.CurrentQuestion())
+		renderQuestion(w, "templates/survey.component.gohtml", QuestionModel{*surv.CurrentQuestion(), url})
 	})
 
 	http.HandleFunc("/table", func(w http.ResponseWriter, r *http.Request) {
